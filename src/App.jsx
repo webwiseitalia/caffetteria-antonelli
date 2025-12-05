@@ -27,10 +27,10 @@ import img23 from './assets/foto/587704125_18414415300189812_8652187560974993843
 import img24 from './assets/foto/588796022_18414415291189812_3632668630135732618_n..jpg'
 import img25 from './assets/foto/588968036_18414790105189812_142411007380145897_n..jpg'
 import img26 from './assets/foto/588995359_18414790090189812_4472822877384325363_n..jpg'
+import logoAntonelli from './assets/logo-antonelli.png'
 
-// Categorize images
-const heroImage = img9 // aperitivo tapas dall'alto - più adatto come sfondo
-const heroCollageImages = [img16, img13, img18] // brindisi cocktail, tartare, pancakes
+// Categorize images - collage fisso
+const heroImages = [img16, img13, img5, img19] // brindisi cocktail, tartare, cocktail singolo, french toast
 const aboutImages = [img19, img17, img8] // french toast, sandwich, panini
 const menuImages = [img22, img15, img10, img21] // tapas spritz, taco, bruschette, tapas carne
 const cocktailImages = [img5, img6, img11, img14, img16] // cocktails
@@ -56,13 +56,21 @@ function App() {
     return () => clearInterval(interval)
   }, [])
 
+
   return (
     <div className="bg-[#0a0a0a] text-white overflow-x-hidden">
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
         <div className="w-full max-w-[1800px] mx-auto px-6 md:px-12 flex justify-between items-center">
-          <a href="#" className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase">
-            Antonelli
+          <a href="#" className="flex items-center gap-3">
+            <img
+              src={logoAntonelli}
+              alt="Caffetteria Antonelli"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+            />
+            <span className="text-xl md:text-2xl font-light tracking-[0.3em] uppercase hidden sm:block">
+              Antonelli
+            </span>
           </a>
           <div className="hidden lg:flex items-center gap-12 text-sm tracking-widest uppercase absolute left-1/2 transform -translate-x-1/2">
             <a href="#chi-siamo" className="hover:text-amber-400 transition-colors">Chi Siamo</a>
@@ -81,96 +89,154 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Section - Centered text, collage on left, background visible on right */}
-      <section className="relative min-h-screen flex items-center">
-        {/* Full background image */}
-        <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="Caffetteria Antonelli"
-            className="w-full h-full object-cover"
-          />
-          {/* Center darkening for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/50" />
-        </div>
+      {/* Hero Section - Artistic Photo Collage */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
 
-        {/* Vertical collage on the LEFT */}
-        <div className="absolute top-28 left-6 lg:left-12 xl:left-20 hidden lg:flex flex-col gap-4 z-20">
-          {heroCollageImages.map((img, i) => (
-            <div
-              key={i}
-              className="relative overflow-hidden shadow-2xl"
-              style={{
-                width: i === 1 ? '260px' : '220px',
-                height: i === 1 ? '180px' : '150px',
-                marginLeft: i === 0 ? '40px' : i === 2 ? '20px' : '0',
-                transform: `rotate(${i === 0 ? '-2' : i === 1 ? '1.5' : '-2.5'}deg)`
-              }}
-            >
-              <img
-                src={img}
-                alt={`Preview ${i + 1}`}
-                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 border-2 border-white/20" />
-            </div>
-          ))}
-          {/* Decorative element */}
-          <div className="w-28 h-28 border-2 border-amber-500/50 absolute -bottom-10 -right-10 -z-10" />
-        </div>
+        {/* Subtle ambient glow */}
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl" />
 
-        {/* Content - CENTERED */}
-        <div className="relative z-20 w-full pt-32 pb-20">
-          <div className="max-w-3xl mx-auto text-center px-6">
-            <p className="text-amber-400 tracking-[0.5em] uppercase text-sm mb-6 font-medium">Piazza Vittorio Veneto, Torino</p>
-            <h1 className="text-5xl md:text-7xl lg:text-9xl font-extralight leading-[0.85] mb-8">
-              Caffetteria
-              <br />
-              <span className="font-medium text-amber-400">Antonelli</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-white/60 font-light max-w-xl mx-auto mb-12 leading-relaxed">
-              Dal caffè della mattina all'ultimo cocktail della notte.
-              Un'esperienza unica nel cuore di Torino.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <a
-                href="https://share-me.it/liste-menu/antonelli/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group px-10 py-5 bg-amber-500 text-black text-sm tracking-widest uppercase font-semibold hover:bg-amber-400 transition-all inline-flex items-center gap-3"
-              >
-                Scopri il Menù
-                <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <a
-                href="#dove-siamo"
-                className="px-10 py-5 border border-white/30 text-sm tracking-widest uppercase font-medium hover:bg-white/10 hover:border-white/50 transition-all"
-              >
-                Vieni a trovarci
-              </a>
-            </div>
+        {/* Main content */}
+        <div className="relative z-10 w-full max-w-[1800px] mx-auto px-6 md:px-12 pt-28 pb-16">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-6 items-center min-h-[85vh]">
 
-            {/* Quick info badges - centered */}
-            <div className="flex flex-wrap gap-6 mt-16 pt-8 border-t border-white/10 justify-center">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-white/50 text-sm">Aperto ora</span>
+            {/* Left side - Text content */}
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              {/* Location badge */}
+              <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 px-4 py-2 mb-8">
+                <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                <span className="text-amber-400 tracking-[0.2em] uppercase text-xs font-medium">Piazza Vittorio Veneto, Torino</span>
               </div>
-              <div className="text-white/30">|</div>
-              <span className="text-white/50 text-sm">07:00 - 03:00</span>
-              <div className="text-white/30">|</div>
-              <span className="text-white/50 text-sm">7 giorni su 7</span>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight leading-[0.9] mb-6">
+                Caffetteria
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 font-medium">
+                  Antonelli
+                </span>
+              </h1>
+
+              <p className="text-lg md:text-xl text-white/60 font-light max-w-md mb-10 leading-relaxed">
+                Dal caffè della mattina all'ultimo cocktail della notte.
+                <span className="text-white/80"> Un'esperienza unica</span> nel cuore di Torino.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-4 mb-10">
+                <a
+                  href="https://share-me.it/liste-menu/antonelli/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-sm tracking-widest uppercase font-semibold hover:shadow-lg hover:shadow-amber-500/25 transition-all inline-flex items-center gap-3"
+                >
+                  Scopri il Menù
+                  <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <a
+                  href="#dove-siamo"
+                  className="px-8 py-4 border border-white/20 text-sm tracking-widest uppercase font-medium hover:bg-white/5 hover:border-amber-500/50 transition-all flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  </svg>
+                  Dove siamo
+                </a>
+              </div>
+
+              {/* Stats row */}
+              <div className="flex flex-wrap items-center gap-6 pt-8 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-white/60 text-sm">Aperto ora</span>
+                </div>
+                <span className="text-white/20">•</span>
+                <span className="text-white/60 text-sm">07:00 - 03:00</span>
+                <span className="text-white/20">•</span>
+                <span className="text-white/60 text-sm">7/7</span>
+              </div>
+            </div>
+
+            {/* Right side - Artistic Photo Collage */}
+            <div className="lg:col-span-7 order-1 lg:order-2 relative h-[500px] md:h-[600px] lg:h-[700px]">
+
+              {/* Photo 1 - Large main (brindisi cocktail) */}
+              <div className="absolute top-0 right-0 w-[55%] h-[65%] group">
+                <div className="relative w-full h-full overflow-hidden rounded-2xl shadow-2xl shadow-black/50 transform hover:scale-[1.02] transition-transform duration-500">
+                  <img
+                    src={heroImages[0]}
+                    alt="Cocktail brindisi"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+                {/* Decorative border */}
+                <div className="absolute -top-3 -right-3 w-full h-full border-2 border-amber-500/30 rounded-2xl -z-10" />
+              </div>
+
+              {/* Photo 2 - Medium left (tartare) */}
+              <div className="absolute top-[15%] left-0 w-[45%] h-[45%] group">
+                <div className="relative w-full h-full overflow-hidden rounded-xl shadow-2xl shadow-black/50 transform hover:scale-[1.02] transition-transform duration-500">
+                  <img
+                    src={heroImages[1]}
+                    alt="Tartare gourmet"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Photo 3 - Small bottom left (cocktail singolo) */}
+              <div className="absolute bottom-[5%] left-[5%] w-[35%] h-[35%] group">
+                <div className="relative w-full h-full overflow-hidden rounded-xl shadow-2xl shadow-black/50 transform hover:scale-[1.02] transition-transform duration-500">
+                  <img
+                    src={heroImages[2]}
+                    alt="Signature cocktail"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Photo 4 - Bottom right (french toast) */}
+              <div className="absolute bottom-0 right-[10%] w-[40%] h-[30%] group">
+                <div className="relative w-full h-full overflow-hidden rounded-xl shadow-2xl shadow-black/50 transform hover:scale-[1.02] transition-transform duration-500">
+                  <img
+                    src={heroImages[3]}
+                    alt="French toast"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
+              </div>
+
+              {/* Floating badge - TripAdvisor */}
+              <div className="absolute bottom-[38%] left-[38%] bg-[#0a0a0a]/95 backdrop-blur-md border border-white/10 px-4 py-3 rounded-lg shadow-xl z-10">
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-400 text-xl">★</span>
+                  <div>
+                    <p className="text-white font-medium text-sm">4.5</p>
+                    <p className="text-white/40 text-xs">TripAdvisor</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Decorative elements */}
+              <div className="absolute top-[60%] right-[55%] w-20 h-20 border border-amber-500/20 rounded-full" />
+              <div className="absolute top-[10%] left-[40%] w-3 h-3 bg-amber-500/60 rounded-full" />
+              <div className="absolute bottom-[25%] right-[5%] w-2 h-2 bg-amber-400/40 rounded-full" />
             </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
-          <span className="text-xs tracking-[0.3em] uppercase">Scopri</span>
-          <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3">
+          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
+            <div className="w-1 h-2 bg-amber-500 rounded-full animate-bounce" />
+          </div>
+          <span className="text-xs tracking-[0.2em] uppercase text-white/30">Scorri</span>
         </div>
       </section>
 
@@ -473,136 +539,18 @@ function App() {
             </a>
           </div>
 
-          {/* True Mosaic Grid - Predefined frames that interlock perfectly */}
-          <div className="grid grid-cols-6 md:grid-cols-12 auto-rows-[100px] md:auto-rows-[120px] gap-2">
-            {/* Frame 1 - Large left (spans 4 cols x 4 rows) */}
-            <div className="col-span-4 row-span-4 relative overflow-hidden group">
-              <img
-                src={galleryImages[0]}
-                alt="Gallery 1"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-amber-400 text-sm tracking-widest uppercase">Aperitivo</span>
+          {/* Simple Grid Gallery - 4 columns, 3 rows, no gaps */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {galleryImages.map((img, index) => (
+              <div key={index} className="aspect-square relative overflow-hidden group">
+                <img
+                  src={img}
+                  alt={`Gallery ${index + 1}`}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-            </div>
-
-            {/* Frame 2 - Medium top right (spans 4 cols x 2 rows) */}
-            <div className="col-span-4 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[1]}
-                alt="Gallery 2"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 3 - Small (spans 2 cols x 2 rows) */}
-            <div className="col-span-2 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[2]}
-                alt="Gallery 3"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 4 - Small (spans 2 cols x 2 rows) */}
-            <div className="col-span-2 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[3]}
-                alt="Gallery 4"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 5 - Medium (spans 4 cols x 2 rows) */}
-            <div className="col-span-4 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[4]}
-                alt="Gallery 5"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 6 - Vertical (spans 2 cols x 3 rows) */}
-            <div className="col-span-2 row-span-3 relative overflow-hidden group">
-              <img
-                src={galleryImages[5]}
-                alt="Gallery 6"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 7 - Wide (spans 5 cols x 2 rows) */}
-            <div className="col-span-5 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[6]}
-                alt="Gallery 7"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-amber-400 text-sm tracking-widest uppercase">Cocktails</span>
-              </div>
-            </div>
-
-            {/* Frame 8 - Small (spans 3 cols x 2 rows) */}
-            <div className="col-span-3 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[7]}
-                alt="Gallery 8"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 9 - Medium (spans 4 cols x 2 rows) */}
-            <div className="col-span-4 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[8]}
-                alt="Gallery 9"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 10 - Small (spans 3 cols x 2 rows) */}
-            <div className="col-span-3 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[9]}
-                alt="Gallery 10"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 11 - Small (spans 3 cols x 2 rows) */}
-            <div className="col-span-3 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[10]}
-                alt="Gallery 11"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-
-            {/* Frame 12 - Wide final (spans 6 cols x 2 rows) */}
-            <div className="col-span-6 row-span-2 relative overflow-hidden group">
-              <img
-                src={galleryImages[11]}
-                alt="Gallery 12"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-amber-400 text-sm tracking-widest uppercase">Food & Drinks</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
