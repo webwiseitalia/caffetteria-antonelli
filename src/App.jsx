@@ -1,99 +1,802 @@
+import { useState, useEffect } from 'react'
+
+// Import all images
+import img1 from './assets/foto/472409993_3828602000787197_6543429588673876213_n..jpg'
+import img2 from './assets/foto/472532752_1295791768236240_2670045543928840755_n..jpg'
+import img3 from './assets/foto/472827915_18372098653189812_9019302285799272199_n..jpg'
+import img4 from './assets/foto/472943505_2106507746479741_119378184547957434_n..jpg'
+import img5 from './assets/foto/473520012_2178907849208213_7242999598690016894_n..jpg'
+import img6 from './assets/foto/476964832_18374700790189812_6359006392909664280_n..jpg'
+import img7 from './assets/foto/482213317_18377219086189812_3773395600271168320_n..jpg'
+import img8 from './assets/foto/490902054_18382787863189812_8092809656813392198_n..jpg'
+import img9 from './assets/foto/515481793_18393119983189812_4342434077910375336_n..jpg'
+import img10 from './assets/foto/524200635_18395857531189812_5299125401848512760_n..jpg'
+import img11 from './assets/foto/534558503_18398651653189812_4953005752891783561_n..jpg'
+import img12 from './assets/foto/542271108_18400982971189812_2487581834979793712_n..jpg'
+import img13 from './assets/foto/549392380_18402643384189812_6602701420485633281_n..jpg'
+import img14 from './assets/foto/554739299_18403639519189812_3749369190348282011_n..jpg'
+import img15 from './assets/foto/556817472_18404456614189812_5973465743111627182_n..jpg'
+import img16 from './assets/foto/562518414_18406844059189812_2696448280435201931_n..jpg'
+import img17 from './assets/foto/574243247_18411886132189812_1588385203297911649_n..jpg'
+import img18 from './assets/foto/574465678_18411885925189812_8658227908941286592_n..jpg'
+import img19 from './assets/foto/575115841_18411886165189812_8756569930334108957_n..jpg'
+import img20 from './assets/foto/575203455_18411886120189812_1504991747317346369_n..jpg'
+import img21 from './assets/foto/581807071_18412874197189812_5838966178605674222_n..jpg'
+import img22 from './assets/foto/581859002_18412874206189812_17772786302821974_n..jpg'
+import img23 from './assets/foto/587704125_18414415300189812_8652187560974993843_n..jpg'
+import img24 from './assets/foto/588796022_18414415291189812_3632668630135732618_n..jpg'
+import img25 from './assets/foto/588968036_18414790105189812_142411007380145897_n..jpg'
+import img26 from './assets/foto/588995359_18414790090189812_4472822877384325363_n..jpg'
+
+// Categorize images
+const heroImage = img9 // aperitivo tapas dall'alto - più adatto come sfondo
+const heroCollageImages = [img16, img13, img18] // brindisi cocktail, tartare, pancakes
+const aboutImages = [img19, img17, img8] // french toast, sandwich, panini
+const menuImages = [img22, img15, img10, img21] // tapas spritz, taco, bruschette, tapas carne
+const cocktailImages = [img5, img6, img11, img14, img16] // cocktails
+const galleryImages = [img1, img2, img3, img4, img12, img20, img23, img24, img25, img26, img7, img18]
+
 function App() {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Auto-rotate gallery
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveGalleryIndex((prev) => (prev + 1) % galleryImages.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <div className="min-h-screen flex flex-col justify-center" style={{ backgroundColor: '#1E1E1E' }}>
-      {/* Hero Section */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center">
-          {/* Badge - Glass style */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 backdrop-blur-sm"
-            style={{
-              backgroundColor: 'rgba(34, 197, 94, 0.1)',
-              border: '1px solid rgba(34, 197, 94, 0.3)'
-            }}
+    <div className="bg-[#0a0a0a] text-white overflow-x-hidden">
+      {/* Navigation */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-[#0a0a0a]/95 backdrop-blur-md py-4' : 'bg-transparent py-6'}`}>
+        <div className="w-full max-w-[1800px] mx-auto px-6 md:px-12 flex justify-between items-center">
+          <a href="#" className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase">
+            Antonelli
+          </a>
+          <div className="hidden lg:flex items-center gap-12 text-sm tracking-widest uppercase absolute left-1/2 transform -translate-x-1/2">
+            <a href="#chi-siamo" className="hover:text-amber-400 transition-colors">Chi Siamo</a>
+            <a href="#menu" className="hover:text-amber-400 transition-colors">Menù</a>
+            <a href="#galleria" className="hover:text-amber-400 transition-colors">Galleria</a>
+            <a href="#dove-siamo" className="hover:text-amber-400 transition-colors">Dove Siamo</a>
+          </div>
+          <a
+            href="https://share-me.it/liste-menu/antonelli/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-amber-500 text-black text-sm font-medium tracking-wider uppercase hover:bg-amber-400 transition-all"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: '#22c55e' }}></span>
-              <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: '#22c55e' }}></span>
-            </span>
-            <span className="text-sm font-medium" style={{ color: '#22c55e' }}>Creato con STUD</span>
+            Menù
+          </a>
+        </div>
+      </nav>
+
+      {/* Hero Section - Centered text, collage on left, background visible on right */}
+      <section className="relative min-h-screen flex items-center">
+        {/* Full background image */}
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Caffetteria Antonelli"
+            className="w-full h-full object-cover"
+          />
+          {/* Center darkening for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/50" />
+        </div>
+
+        {/* Vertical collage on the LEFT */}
+        <div className="absolute top-28 left-6 lg:left-12 xl:left-20 hidden lg:flex flex-col gap-4 z-20">
+          {heroCollageImages.map((img, i) => (
+            <div
+              key={i}
+              className="relative overflow-hidden shadow-2xl"
+              style={{
+                width: i === 1 ? '260px' : '220px',
+                height: i === 1 ? '180px' : '150px',
+                marginLeft: i === 0 ? '40px' : i === 2 ? '20px' : '0',
+                transform: `rotate(${i === 0 ? '-2' : i === 1 ? '1.5' : '-2.5'}deg)`
+              }}
+            >
+              <img
+                src={img}
+                alt={`Preview ${i + 1}`}
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 border-2 border-white/20" />
+            </div>
+          ))}
+          {/* Decorative element */}
+          <div className="w-28 h-28 border-2 border-amber-500/50 absolute -bottom-10 -right-10 -z-10" />
+        </div>
+
+        {/* Content - CENTERED */}
+        <div className="relative z-20 w-full pt-32 pb-20">
+          <div className="max-w-3xl mx-auto text-center px-6">
+            <p className="text-amber-400 tracking-[0.5em] uppercase text-sm mb-6 font-medium">Piazza Vittorio Veneto, Torino</p>
+            <h1 className="text-5xl md:text-7xl lg:text-9xl font-extralight leading-[0.85] mb-8">
+              Caffetteria
+              <br />
+              <span className="font-medium text-amber-400">Antonelli</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-white/60 font-light max-w-xl mx-auto mb-12 leading-relaxed">
+              Dal caffè della mattina all'ultimo cocktail della notte.
+              Un'esperienza unica nel cuore di Torino.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <a
+                href="https://share-me.it/liste-menu/antonelli/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group px-10 py-5 bg-amber-500 text-black text-sm tracking-widest uppercase font-semibold hover:bg-amber-400 transition-all inline-flex items-center gap-3"
+              >
+                Scopri il Menù
+                <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a
+                href="#dove-siamo"
+                className="px-10 py-5 border border-white/30 text-sm tracking-widest uppercase font-medium hover:bg-white/10 hover:border-white/50 transition-all"
+              >
+                Vieni a trovarci
+              </a>
+            </div>
+
+            {/* Quick info badges - centered */}
+            <div className="flex flex-wrap gap-6 mt-16 pt-8 border-t border-white/10 justify-center">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-white/50 text-sm">Aperto ora</span>
+              </div>
+              <div className="text-white/30">|</div>
+              <span className="text-white/50 text-sm">07:00 - 03:00</span>
+              <div className="text-white/30">|</div>
+              <span className="text-white/50 text-sm">7 giorni su 7</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+          <span className="text-xs tracking-[0.3em] uppercase">Scopri</span>
+          <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent" />
+        </div>
+      </section>
+
+      {/* Chi Siamo Section - FOTO A SINISTRA, TESTO A DESTRA */}
+      <section id="chi-siamo" className="py-32 relative">
+        {/* Background accent on the LEFT this time */}
+        <div className="absolute top-0 left-0 w-1/3 h-full bg-amber-500/5 hidden lg:block" />
+
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+          {/* Section label - aligned right */}
+          <div className="flex items-center justify-end gap-6 mb-20">
+            <span className="text-amber-400 tracking-[0.3em] uppercase text-sm">Chi Siamo</span>
+            <div className="w-24 h-px bg-amber-500" />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-            Benvenuto su{' '}
-            <span style={{ color: '#22c55e' }}>Caffetteria Antonelli</span>
-          </h1>
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Image Grid - NOW ON THE LEFT */}
+            <div className="lg:col-span-7 relative order-2 lg:order-1">
+              <div className="grid grid-cols-2 gap-4">
+                {/* Stacked images */}
+                <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
+                  <div className="h-[240px] relative overflow-hidden group">
+                    <img
+                      src={aboutImages[1]}
+                      alt="Pranzo"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent" />
+                    <span className="absolute bottom-6 left-6 text-sm tracking-widest uppercase text-white/80">Pranzo</span>
+                  </div>
+                  <div className="h-[240px] relative overflow-hidden group">
+                    <img
+                      src={aboutImages[2]}
+                      alt="Brunch"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent" />
+                    <span className="absolute bottom-6 left-6 text-sm tracking-widest uppercase text-white/80">Brunch</span>
+                  </div>
+                </div>
 
-          <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10">
-            Il tuo nuovo sito web e pronto per essere personalizzato.
-          </p>
+                {/* Large image */}
+                <div className="col-span-2 md:col-span-1 h-[400px] md:h-[500px] relative overflow-hidden group">
+                  <img
+                    src={aboutImages[0]}
+                    alt="Colazione"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent" />
+                  <span className="absolute bottom-6 left-6 text-sm tracking-widest uppercase text-white/80">Colazione</span>
+                </div>
+              </div>
 
-          {/* Call to action */}
-          <div
-            className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl backdrop-blur-sm"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.03)',
-              border: '2px solid rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            <span className="text-2xl">👈</span>
-            <p className="text-white/80 text-lg">
-              Usa la <span style={{ color: '#22c55e' }} className="font-semibold">chat a sinistra</span> per iniziare a sviluppare il tuo sito
+              {/* Floating accent - on the right now */}
+              <div className="absolute -bottom-8 -right-8 w-32 h-32 border border-amber-500/30 hidden lg:block" />
+            </div>
+
+            {/* Text Content - NOW ON THE RIGHT */}
+            <div className="lg:col-span-5 lg:pl-8 order-1 lg:order-2">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight mb-8">
+                Un angolo di
+                <br />
+                <span className="text-amber-400 font-normal">vita torinese</span>
+              </h2>
+              <div className="space-y-6 text-white/70 text-lg leading-relaxed">
+                <p>
+                  Affacciati sulla maestosa Piazza Vittorio Veneto, siamo il punto di ritrovo
+                  preferito di chi cerca qualità e atmosfera. Dalle prime luci dell'alba fino
+                  a notte fonda, Caffetteria Antonelli è il cuore pulsante della movida torinese.
+                </p>
+                <p>
+                  I nostri interni in stile loft, con mattoni a vista e divani in pelle bordeaux,
+                  creano l'ambiente perfetto per ogni momento: la colazione di corsa, il pranzo
+                  rilassato, l'aperitivo con gli amici o il dopocena romantico.
+                </p>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-white/10">
+                <div>
+                  <span className="text-4xl md:text-5xl font-light text-amber-400">7</span>
+                  <p className="text-sm text-white/50 mt-2 tracking-wider uppercase">Giorni su 7</p>
+                </div>
+                <div>
+                  <span className="text-4xl md:text-5xl font-light text-amber-400">20+</span>
+                  <p className="text-sm text-white/50 mt-2 tracking-wider uppercase">Ore al giorno</p>
+                </div>
+                <div>
+                  <span className="text-4xl md:text-5xl font-light text-amber-400">∞</span>
+                  <p className="text-sm text-white/50 mt-2 tracking-wider uppercase">Emozioni</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Section - Full Width Asymmetric */}
+      <section id="menu" className="py-32 relative bg-[#0d0d0d]">
+        {/* Background accent */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-amber-500/5" />
+
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12 relative z-10">
+          {/* Section label */}
+          <div className="flex items-center gap-6 mb-20">
+            <div className="w-24 h-px bg-amber-500" />
+            <span className="text-amber-400 tracking-[0.3em] uppercase text-sm">Il Nostro Menù</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content */}
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight mb-8">
+                Tapas creative e
+                <br />
+                <span className="text-amber-400 font-normal">cocktail d'autore</span>
+              </h2>
+              <p className="text-white/70 text-lg leading-relaxed mb-12 max-w-lg">
+                Il nostro menù racconta la passione per la cucina italiana rivisitata in chiave moderna.
+                Dalle colazioni energiche agli aperitivi gourmet, ogni piatto è un'esperienza.
+                I nostri cocktail, preparati con cura artigianale, sono il complemento perfetto
+                per le nostre tapas creative.
+              </p>
+
+              {/* Menu Categories */}
+              <div className="space-y-6 mb-12">
+                {[
+                  { name: 'Colazioni & Brunch', desc: 'Pancakes, eggs benedict, french toast' },
+                  { name: 'Aperitivo & Tapas', desc: 'Tartare, tacos gourmet, crocchette' },
+                  { name: 'Cocktail Bar', desc: 'Signature cocktails, vini pregiati' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4 group">
+                    <div className="w-2 h-2 bg-amber-500 mt-3 group-hover:scale-150 transition-transform" />
+                    <div>
+                      <h4 className="text-xl font-medium mb-1">{item.name}</h4>
+                      <p className="text-white/50">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="https://share-me.it/liste-menu/antonelli/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-4 px-10 py-5 bg-amber-500 text-black text-sm tracking-widest uppercase font-medium hover:bg-amber-400 transition-all"
+              >
+                Esplora il Menù Completo
+                <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+
+            {/* Image Collage */}
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="h-64 overflow-hidden">
+                    <img src={menuImages[0]} alt="Tapas" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <div className="h-48 overflow-hidden">
+                    <img src={menuImages[1]} alt="Tartare" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                  </div>
+                </div>
+                <div className="space-y-4 pt-12">
+                  <div className="h-48 overflow-hidden">
+                    <img src={menuImages[2]} alt="Taco" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                  </div>
+                  <div className="h-64 overflow-hidden">
+                    <img src={menuImages[3]} alt="Bruschette" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Overlay text */}
+              <div className="absolute -bottom-6 -right-6 bg-[#0a0a0a] p-8 hidden lg:block">
+                <p className="text-5xl font-light text-amber-400">+50</p>
+                <p className="text-sm text-white/50 tracking-wider uppercase mt-2">Piatti unici</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Cocktail showcase */}
+          <div className="mt-32">
+            <h3 className="text-2xl font-light mb-12 tracking-wider">I Nostri Signature Cocktails</h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {cocktailImages.map((img, i) => (
+                <div key={i} className="aspect-[3/4] overflow-hidden relative group">
+                  <img
+                    src={img}
+                    alt={`Cocktail ${i + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-32 relative overflow-hidden">
+        {/* Large background text */}
+        <div className="absolute top-1/2 left-0 transform -translate-y-1/2 text-[20vw] font-extralight text-white/[0.02] whitespace-nowrap pointer-events-none">
+          ANTONELLI
+        </div>
+
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12 relative z-10">
+          {/* Section label */}
+          <div className="flex items-center gap-6 mb-20">
+            <div className="w-24 h-px bg-amber-500" />
+            <span className="text-amber-400 tracking-[0.3em] uppercase text-sm">Recensioni</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight leading-tight mb-8">
+                Cosa dicono
+                <br />
+                <span className="text-amber-400 font-normal">di noi</span>
+              </h2>
+
+              {/* TripAdvisor badge */}
+              <div className="inline-flex items-center gap-4 bg-white/5 p-6 border border-white/10">
+                <div className="text-4xl">🏆</div>
+                <div>
+                  <p className="font-medium">Travellers' Choice</p>
+                  <p className="text-white/50 text-sm">TripAdvisor 2024</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Reviews */}
+            <div className="space-y-8">
+              {[
+                {
+                  text: "Atmosfera incredibile, tapas eccezionali e cocktail perfetti. Il posto ideale per un aperitivo vista piazza. Consigliato!",
+                  author: "Marco R.",
+                  rating: 5
+                },
+                {
+                  text: "Colazione top! Pancakes buonissimi e caffè ottimo. Il locale è bellissimo con i suoi divani in pelle. Torneremo sicuramente.",
+                  author: "Giulia M.",
+                  rating: 5
+                },
+                {
+                  text: "Aperitivo perfetto su Piazza Vittorio. Le tapas sono creative e il servizio impeccabile. Un must di Torino!",
+                  author: "Alessandro P.",
+                  rating: 5
+                }
+              ].map((review, i) => (
+                <div key={i} className="border-l-2 border-amber-500 pl-8 py-4">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(review.rating)].map((_, j) => (
+                      <span key={j} className="text-amber-400">★</span>
+                    ))}
+                  </div>
+                  <p className="text-lg text-white/80 italic mb-4">"{review.text}"</p>
+                  <p className="text-sm text-white/50 tracking-wider uppercase">{review.author}</p>
+                </div>
+              ))}
+
+              <a
+                href="https://www.tripadvisor.it/Restaurant_Review-g187855-d5854755-Reviews-Caffetteria_Antonelli-Turin_Province_of_Turin_Piedmont.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors mt-4"
+              >
+                Leggi tutte le recensioni su TripAdvisor
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section - True Mosaic Layout */}
+      <section id="galleria" className="py-32 relative bg-[#0d0d0d]">
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+          {/* Section label */}
+          <div className="flex items-center justify-between mb-20">
+            <div className="flex items-center gap-6">
+              <div className="w-24 h-px bg-amber-500" />
+              <span className="text-amber-400 tracking-[0.3em] uppercase text-sm">Galleria</span>
+            </div>
+            <a
+              href="https://www.instagram.com/caffetteriaantonelli/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/50 hover:text-amber-400 transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              @caffetteriaantonelli
+            </a>
+          </div>
+
+          {/* True Mosaic Grid - Predefined frames that interlock perfectly */}
+          <div className="grid grid-cols-6 md:grid-cols-12 auto-rows-[100px] md:auto-rows-[120px] gap-2">
+            {/* Frame 1 - Large left (spans 4 cols x 4 rows) */}
+            <div className="col-span-4 row-span-4 relative overflow-hidden group">
+              <img
+                src={galleryImages[0]}
+                alt="Gallery 1"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-amber-400 text-sm tracking-widest uppercase">Aperitivo</span>
+              </div>
+            </div>
+
+            {/* Frame 2 - Medium top right (spans 4 cols x 2 rows) */}
+            <div className="col-span-4 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[1]}
+                alt="Gallery 2"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 3 - Small (spans 2 cols x 2 rows) */}
+            <div className="col-span-2 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[2]}
+                alt="Gallery 3"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 4 - Small (spans 2 cols x 2 rows) */}
+            <div className="col-span-2 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[3]}
+                alt="Gallery 4"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 5 - Medium (spans 4 cols x 2 rows) */}
+            <div className="col-span-4 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[4]}
+                alt="Gallery 5"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 6 - Vertical (spans 2 cols x 3 rows) */}
+            <div className="col-span-2 row-span-3 relative overflow-hidden group">
+              <img
+                src={galleryImages[5]}
+                alt="Gallery 6"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 7 - Wide (spans 5 cols x 2 rows) */}
+            <div className="col-span-5 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[6]}
+                alt="Gallery 7"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-amber-400 text-sm tracking-widest uppercase">Cocktails</span>
+              </div>
+            </div>
+
+            {/* Frame 8 - Small (spans 3 cols x 2 rows) */}
+            <div className="col-span-3 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[7]}
+                alt="Gallery 8"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 9 - Medium (spans 4 cols x 2 rows) */}
+            <div className="col-span-4 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[8]}
+                alt="Gallery 9"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 10 - Small (spans 3 cols x 2 rows) */}
+            <div className="col-span-3 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[9]}
+                alt="Gallery 10"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 11 - Small (spans 3 cols x 2 rows) */}
+            <div className="col-span-3 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[10]}
+                alt="Gallery 11"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+
+            {/* Frame 12 - Wide final (spans 6 cols x 2 rows) */}
+            <div className="col-span-6 row-span-2 relative overflow-hidden group">
+              <img
+                src={galleryImages[11]}
+                alt="Gallery 12"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-amber-400 text-sm tracking-widest uppercase">Food & Drinks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Location Section */}
+      <section id="dove-siamo" className="py-32 relative">
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+          {/* Section label */}
+          <div className="flex items-center gap-6 mb-20">
+            <div className="w-24 h-px bg-amber-500" />
+            <span className="text-amber-400 tracking-[0.3em] uppercase text-sm">Dove Siamo</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Map */}
+            <div className="h-[500px] relative overflow-hidden bg-[#1a1a1a]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2818.0857461716897!2d7.693899776889657!3d45.06394697107026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47886d6faa07b2e3%3A0x1d9f3e7d43f5c8a9!2sPiazza%20Vittorio%20Veneto%2C%201%2C%2010124%20Torino%20TO%2C%20Italy!5e0!3m2!1sen!2sus!4v1699999999999!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Mappa Caffetteria Antonelli"
+              />
+              {/* Overlay pin */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full">
+                <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center animate-bounce">
+                  <div className="w-3 h-3 bg-white rounded-full" />
+                </div>
+              </div>
+            </div>
+
+            {/* Info */}
+            <div className="flex flex-col justify-center">
+              <h2 className="text-4xl md:text-5xl font-extralight mb-12">
+                Vieni a
+                <br />
+                <span className="text-amber-400 font-normal">trovarci</span>
+              </h2>
+
+              <div className="space-y-8">
+                {/* Address */}
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Indirizzo</h4>
+                    <p className="text-white/60">Piazza Vittorio Veneto 1</p>
+                    <p className="text-white/60">10124 Torino (TO) – Italia</p>
+                  </div>
+                </div>
+
+                {/* Hours */}
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Orari</h4>
+                    <div className="text-white/60 space-y-1">
+                      <p>Lunedì - Giovedì: 07:00 – 02:30</p>
+                      <p>Venerdì - Domenica: 07:00 – 03:00</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex gap-6">
+                  <div className="w-12 h-12 bg-amber-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">Telefono</h4>
+                    <a href="tel:+390118172544" className="text-white/60 hover:text-amber-400 transition-colors">
+                      +39 011 817 2544
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="mt-12 flex flex-wrap gap-4">
+                <a
+                  href="https://www.google.com/maps/dir//Piazza+Vittorio+Veneto+1+10124+Torino+TO+Italia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-4 bg-amber-500 text-black text-sm tracking-widest uppercase font-medium hover:bg-amber-400 transition-all"
+                >
+                  Indicazioni stradali
+                </a>
+                <a
+                  href="tel:+390118172544"
+                  className="px-8 py-4 border border-white/30 text-sm tracking-widest uppercase font-medium hover:bg-white/10 transition-all"
+                >
+                  Chiamaci
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#050505] py-20 border-t border-white/5">
+        <div className="max-w-[1800px] mx-auto px-6 md:px-12">
+          <div className="grid md:grid-cols-4 gap-12 mb-16">
+            {/* Brand */}
+            <div className="md:col-span-2">
+              <h3 className="text-3xl font-light tracking-[0.3em] uppercase mb-6">Antonelli</h3>
+              <p className="text-white/50 max-w-md leading-relaxed mb-8">
+                Un caffè storico nel cuore di Torino, dove tradizione e innovazione
+                si incontrano per creare momenti indimenticabili.
+              </p>
+              {/* Social */}
+              <div className="flex gap-4">
+                <a
+                  href="https://www.instagram.com/caffetteriaantonelli/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/5 hover:bg-amber-500 transition-colors flex items-center justify-center group"
+                >
+                  <svg className="w-5 h-5 text-white/60 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.facebook.com/CaffetteriaAntonelli/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/5 hover:bg-amber-500 transition-colors flex items-center justify-center group"
+                >
+                  <svg className="w-5 h-5 text-white/60 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.tripadvisor.it/Restaurant_Review-g187855-d5854755-Reviews-Caffetteria_Antonelli-Turin_Province_of_Turin_Piedmont.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-white/5 hover:bg-amber-500 transition-colors flex items-center justify-center group"
+                >
+                  <svg className="w-5 h-5 text-white/60 group-hover:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 004.04 10.43 5.976 5.976 0 004.075-1.6L12 19.705l1.922-2.09a5.972 5.972 0 004.072 1.598 6 6 0 004.041-10.43L24 6.648h-4.35a13.573 13.573 0 00-7.644-2.353zM6.003 17.209a3.997 3.997 0 110-7.994 3.997 3.997 0 010 7.994zm11.994 0a3.997 3.997 0 110-7.994 3.997 3.997 0 010 7.994zM6.003 11.217a1.998 1.998 0 100 3.996 1.998 1.998 0 000-3.996zm11.994 0a1.998 1.998 0 100 3.996 1.998 1.998 0 000-3.996zm-5.99-5.922c2.164 0 4.163.601 5.879 1.61a8.02 8.02 0 00-5.879-1.61 8.02 8.02 0 00-5.879 1.61 11.58 11.58 0 015.879-1.61z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-sm tracking-widest uppercase text-white/30 mb-6">Link Rapidi</h4>
+              <ul className="space-y-4">
+                <li><a href="#chi-siamo" className="text-white/60 hover:text-amber-400 transition-colors">Chi Siamo</a></li>
+                <li><a href="https://share-me.it/liste-menu/antonelli/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-amber-400 transition-colors">Menù</a></li>
+                <li><a href="#galleria" className="text-white/60 hover:text-amber-400 transition-colors">Galleria</a></li>
+                <li><a href="#dove-siamo" className="text-white/60 hover:text-amber-400 transition-colors">Dove Siamo</a></li>
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="text-sm tracking-widest uppercase text-white/30 mb-6">Contatti</h4>
+              <ul className="space-y-4 text-white/60">
+                <li>Piazza Vittorio Veneto 1</li>
+                <li>10124 Torino (TO)</li>
+                <li>
+                  <a href="tel:+390118172544" className="hover:text-amber-400 transition-colors">
+                    +39 011 817 2544
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom */}
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-white/30 text-sm">
+              © {new Date().getFullYear()} Caffetteria Antonelli. Tutti i diritti riservati.
+            </p>
+            <p className="text-white/30 text-sm">
+              Piazza Vittorio Veneto 1, Torino
             </p>
           </div>
         </div>
-
-        {/* Features Grid - Glass cards */}
-        <div className="grid md:grid-cols-3 gap-6 mt-20">
-          {[
-            {
-              icon: '⚡',
-              title: 'Veloce',
-              description: 'Costruito con Vite e React per prestazioni ottimali'
-            },
-            {
-              icon: '🎯',
-              title: 'Personalizzabile',
-              description: 'Tailwind CSS per uno stile completamente flessibile'
-            },
-            {
-              icon: '💎',
-              title: 'Moderno',
-              description: 'Design contemporaneo e responsive su tutti i dispositivi'
-            }
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.02]"
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                border: '2px solid rgba(255, 255, 255, 0.1)'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.borderColor = 'rgba(34, 197, 94, 0.3)'}
-              onMouseOut={(e) => e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'}
-            >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-white/60">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      {/* Footer - minimal */}
-      <footer className="mt-16 text-center">
-        <p className="text-white/30 text-sm">
-          Creato con{' '}
-          <a
-            href="https://studio.webwiseitalia.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors"
-            style={{ color: '#22c55e' }}
-          >
-            STUD
-          </a>
-        </p>
       </footer>
     </div>
   )
