@@ -283,11 +283,13 @@ function App() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3">
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
-            <div className="w-1 h-2 bg-amber-500 rounded-full animate-bounce" />
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 hidden md:flex">
+          <span className="text-[10px] tracking-[0.15em] uppercase text-white/40">Scorri</span>
+          <div className="flex flex-col items-center gap-1">
+            <svg className="w-5 h-5 text-amber-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
-          <span className="text-xs tracking-[0.2em] uppercase text-white/30">Scorri</span>
         </div>
       </section>
 
@@ -297,10 +299,10 @@ function App() {
         <div className="absolute top-0 left-0 w-1/3 h-full bg-amber-500/5 hidden lg:block" />
 
         <div className="max-w-[1800px] mx-auto px-6 md:px-12">
-          {/* Section label - aligned right */}
-          <div className="flex items-center justify-end gap-4 md:gap-6 mb-10 md:mb-20">
-            <span className="text-amber-400 tracking-[0.2em] md:tracking-[0.3em] uppercase text-xs md:text-sm">Chi Siamo</span>
+          {/* Section label - aligned left */}
+          <div className="flex items-center gap-4 md:gap-6 mb-10 md:mb-20">
             <div className="w-12 md:w-24 h-px bg-amber-500" />
+            <span className="text-amber-400 tracking-[0.2em] md:tracking-[0.3em] uppercase text-xs md:text-sm">Chi Siamo</span>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
